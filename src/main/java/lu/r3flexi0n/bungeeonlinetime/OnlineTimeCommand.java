@@ -129,6 +129,55 @@ public class OnlineTimeCommand extends Command {
                 }
             });
 
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("rankup")){
+            if (!player.hasPermission("onlinetime.rankup")){
+                player.sendMessage(new TextComponent(Language.NO_PERMISSION));
+                return;
+            }
+
+            ProxyServer.getInstance().getScheduler().runAsync(BungeeOnlineTime.INSTANCE, () -> {
+                try {
+
+                    OnlineTime onlineTime = BungeeOnlineTime.SQL.getOnlineTime(player.getUniqueId());
+                    if (onlineTime == null) {
+                        player.sendMessage(new TextComponent(Language.PLAYER_NOT_FOUND
+                                .replace("%PLAYER%", player.getName())));
+                        return;
+                    }
+
+                    long seconds = onlineTime.getTime() / 1000;
+                    int hours = (int) (seconds / 3600);
+                    int days = (int) (seconds / 86400);
+                    int minutes = (int) ((seconds % 3600) / 60);
+
+                    if (days == 60){
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set elder");
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
+                    } else if (days == 20){
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set mayor");
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
+                    } else if (days == 10){
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set steward");
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
+                    } else if (days == 1){
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set commoner");
+                        ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
+                    } else {
+                        player.sendMessage(new TextComponent(Language.NOT_ENOUGH_ONTIME));
+                    }
+
+                    player.sendMessage(new TextComponent(Language.ONLINE_TIME
+                            .replace("%PLAYER%", player.getName())
+                            .replace("%DAYS%", String.valueOf(days))
+                            .replace("%HOURS%", String.valueOf(hours))
+                            .replace("%MINUTES%", String.valueOf(minutes))));
+
+                } catch (Exception ex) {
+                    player.sendMessage(new TextComponent(Language.ERROR));
+                    ex.printStackTrace();
+                }
+            });
+
         } else if (args.length == 1 && args[0].equalsIgnoreCase("resetall")) {
 
             if (!player.hasPermission("onlinetime.resetall")) {

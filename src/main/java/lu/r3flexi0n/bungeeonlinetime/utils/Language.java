@@ -17,6 +17,7 @@ public class Language {
     public static String TOP_TIME_BELOW = "&7====== &6Top 10 &7======";
     public static String RESET_ALL = "&7The database has been reset.";
     public static String RESET_PLAYER = "&6%PLAYER%&7's onlinetime has been reset.";
+    public static String NOT_ENOUGH_ONTIME = "&6%PLAYER%&7 not enough ontime.";
 
     public static void create(Configuration config) {
         addDefault(config, "Language.onlyPlayer", ONLY_PLAYER);
@@ -31,6 +32,7 @@ public class Language {
         addDefault(config, "Language.topTimeBelow", TOP_TIME_BELOW);
         addDefault(config, "Language.resetAll", RESET_ALL);
         addDefault(config, "Language.resetPlayer", RESET_PLAYER);
+        addDefault(config, "Language.notEnoughOntime", NOT_ENOUGH_ONTIME);
     }
 
     public static void load(Configuration config) {
@@ -46,6 +48,7 @@ public class Language {
         TOP_TIME_BELOW = ChatColor.translateAlternateColorCodes('&', config.getString("Language.topTimeBelow"));
         RESET_ALL = ChatColor.translateAlternateColorCodes('&', config.getString("Language.resetAll"));
         RESET_PLAYER = ChatColor.translateAlternateColorCodes('&', config.getString("Language.resetPlayer"));
+        NOT_ENOUGH_ONTIME = ChatColor.translateAlternateColorCodes('&', config.getString("Language.resetPlayer"));
     }
 
     private static void addDefault(Configuration config, String path, Object value) {
