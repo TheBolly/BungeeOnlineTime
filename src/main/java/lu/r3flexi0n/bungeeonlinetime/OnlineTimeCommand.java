@@ -129,7 +129,7 @@ public class OnlineTimeCommand extends Command {
                 }
             });
 
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("rankup")){
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("rankup")){
             if (!player.hasPermission("onlinetime.rankup")){
                 player.sendMessage(new TextComponent(Language.NO_PERMISSION));
                 return;
@@ -153,24 +153,46 @@ public class OnlineTimeCommand extends Command {
                     if (days == 60){
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set elder");
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
+
+                        player.sendMessage(new TextComponent(Language.PLAYER_RANKUP
+                                .replace("%PLAYER%", player.getName())
+                                .replace("%DAYS%", String.valueOf(days))
+                                .replace("%HOURS%", String.valueOf(hours))
+                                .replace("%MINUTES%", String.valueOf(minutes))));
                     } else if (days == 20){
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set mayor");
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
+
+                        player.sendMessage(new TextComponent(Language.PLAYER_RANKUP
+                                .replace("%PLAYER%", player.getName())
+                                .replace("%DAYS%", String.valueOf(days))
+                                .replace("%HOURS%", String.valueOf(hours))
+                                .replace("%MINUTES%", String.valueOf(minutes))));
                     } else if (days == 10){
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set steward");
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
+
+                        player.sendMessage(new TextComponent(Language.PLAYER_RANKUP
+                                .replace("%PLAYER%", player.getName())
+                                .replace("%DAYS%", String.valueOf(days))
+                                .replace("%HOURS%", String.valueOf(hours))
+                                .replace("%MINUTES%", String.valueOf(minutes))));
                     } else if (days == 1){
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb user " + player.getName() + " group set commoner");
                         ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "lpb networksync");
-                    } else {
-                        player.sendMessage(new TextComponent(Language.NOT_ENOUGH_ONTIME));
-                    }
 
-                    player.sendMessage(new TextComponent(Language.ONLINE_TIME
-                            .replace("%PLAYER%", player.getName())
-                            .replace("%DAYS%", String.valueOf(days))
-                            .replace("%HOURS%", String.valueOf(hours))
-                            .replace("%MINUTES%", String.valueOf(minutes))));
+                        player.sendMessage(new TextComponent(Language.PLAYER_RANKUP
+                                .replace("%PLAYER%", player.getName())
+                                .replace("%DAYS%", String.valueOf(days))
+                                .replace("%HOURS%", String.valueOf(hours))
+                                .replace("%MINUTES%", String.valueOf(minutes))));
+                    } else {
+                        player.sendMessage(new TextComponent(Language.NOT_ENOUGH_ONTIME
+                                .replace("%PLAYER%", player.getName())
+                                .replace("%DAYS%", String.valueOf(days))
+                                .replace("%HOURS%", String.valueOf(hours))
+                                .replace("%MINUTES%", String.valueOf(minutes))));
+                    }
 
                 } catch (Exception ex) {
                     player.sendMessage(new TextComponent(Language.ERROR));
@@ -222,6 +244,7 @@ public class OnlineTimeCommand extends Command {
             player.sendMessage(new TextComponent("§7/ontime"));
             player.sendMessage(new TextComponent("§7/ontime get <player>"));
             player.sendMessage(new TextComponent("§7/ontime top"));
+            player.sendMessage(new TextComponent("§7/ontime rankup"));
         }
     }
 }

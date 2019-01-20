@@ -30,8 +30,8 @@ public class BungeeOnlineTime extends Plugin {
     public static SQL SQL;
 
     public static boolean MYSQL_ENABLED = false;
-    public static String COMMAND_ALIASES = "ot,pt,playtime";
-    public static List<String> DISABLED_SERVERS = Arrays.asList("lobby");
+    public static String COMMAND_ALIASES = "ot,pt,playtime,ontime";
+    public static List<String> DISABLED_SERVERS = Arrays.asList("hub");
     public static int TOP_ONLINETIMES_LIMIT = 10;
 
     private String host, database, username, password;
